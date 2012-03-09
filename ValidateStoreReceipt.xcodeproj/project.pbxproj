@@ -282,6 +282,7 @@
 				);
 				RUN_CLANG_STATIC_ANALYZER = YES;
 				SDKROOT = macosx10.6;
+				SYMROOT = ../../build;
 			};
 			name = Debug;
 		};
@@ -299,6 +300,7 @@
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				RUN_CLANG_STATIC_ANALYZER = YES;
 				SDKROOT = macosx10.6;
+				SYMROOT = ../../build;
 			};
 			name = Release;
 		};

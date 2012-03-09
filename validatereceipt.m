@@ -227,8 +227,6 @@ BOOL validateReceiptAtPath(NSString * path)
 
 	if ([NSGarbageCollector defaultCollector])
 		[[NSGarbageCollector defaultCollector] enableCollectorForPointer:guidData];
-	else 
-		[guidData autorelease];
 
 	if (!guidData)
 		return NO;
@@ -244,6 +242,8 @@ BOOL validateReceiptAtPath(NSString * path)
 	[input appendData:[receipt objectForKey:kReceiptOpaqueValue]];
 	[input appendData:[receipt objectForKey:kReceiptBundleIdentiferData]];
 	
+    [guidData autorelease];
+
 	NSMutableData *hash = [NSMutableData dataWithLength:SHA_DIGEST_LENGTH];
 	SHA1([input bytes], [input length], [hash mutableBytes]);
 	if ([hash isEqualToData:[receipt objectForKey:kReceiptHash]]) 

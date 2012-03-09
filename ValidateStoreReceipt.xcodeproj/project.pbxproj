@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		757917171274DB9800D249AB /* validatereceipt.m in Sources */ = {isa = PBXBuildFile; fileRef = DD5EBFFE1273472D00361AC6 /* validatereceipt.m */; };
 		757917181274DB9D00D249AB /* validatereceipt.h in Headers */ = {isa = PBXBuildFile; fileRef = DD5EBFFD1273472D00361AC6 /* validatereceipt.h */; };
+		75E4FADA150ABCD500B54A49 /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DDDE9E921281FFD3003F581D /* Security.framework */; };
 		8DD76F9A0486AA7600D96B5E /* ValidateStoreReceipt.m in Sources */ = {isa = PBXBuildFile; fileRef = 08FB7796FE84155DC02AAC07 /* ValidateStoreReceipt.m */; settings = {ATTRIBUTES = (); }; };
 		8DD76F9C0486AA7600D96B5E /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 08FB779EFE84155DC02AAC07 /* Foundation.framework */; };
 		DD5EBFFF1273472D00361AC6 /* validatereceipt.m in Sources */ = {isa = PBXBuildFile; fileRef = DD5EBFFE1273472D00361AC6 /* validatereceipt.m */; };
@@ -46,6 +47,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				75E4FADA150ABCD500B54A49 /* Security.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

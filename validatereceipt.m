@@ -42,9 +42,7 @@
 //#define USE_SAMPLE_RECEIPT // also defined in the debug build settings
 
 #ifdef USE_SAMPLE_RECEIPT
-#warning ************************************
 #warning ******* USES SAMPLE RECEIPT! *******
-#warning ************************************
 #endif
 
 

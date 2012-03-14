@@ -382,7 +382,7 @@ NSDictionary * dictionaryWithAppStoreReceipt(NSString * path)
 			}
 
 			// this code will come handy when the first real receipts arrive
-#if 0
+#ifdef DEBUG
 			unsigned long err = ERR_get_error();
 			if(err)
 				printf("%lu: %s\n",err,ERR_error_string(err,NULL));
@@ -614,10 +614,12 @@ BOOL validateReceiptAtPath(NSString * path)
 	NSString *bundleIdentifier = (NSString*)global_bundleIdentifier;
 #ifndef USE_SAMPLE_RECEIPT
 	// avoid making stupid mistakes --> check again
-	NSCAssert([bundleVersion isEqualToString:[[NSBundle mainBundle] objectForInfoDictionaryKey:@"CFBundleShortVersionString"]],
-			 @"whoops! check the hard-coded CFBundleShortVersionString!");
-	NSCAssert([bundleIdentifier isEqualToString:[[NSBundle mainBundle] bundleIdentifier]],
-			 @"whoops! check the hard-coded bundle identifier!");
+    NSString *version = [[NSBundle mainBundle] objectForInfoDictionaryKey:@"CFBundleShortVersionString"];
+    NSString *bundle = [[NSBundle mainBundle] bundleIdentifier];
+	NSCAssert([bundleVersion isEqualToString:version],
+			 @"hard-coded CFBundleShortVersionString: %@ != bundle version %@", bundleVersion, version);
+	NSCAssert([bundleIdentifier isEqualToString:bundle],
+			 @"hard-coded bundle identifier %@ != bundle id %@",bundleIdentifier, bundle);
 #else
 	bundleVersion = @"1.0.2";
 	bundleIdentifier = @"com.example.SampleApp";
@@ -652,12 +654,19 @@ BOOL validateReceiptAtPath(NSString * path)
 	NSMutableData *hash = [NSMutableData dataWithLength:SHA_DIGEST_LENGTH];
 	SHA1([input bytes], [input length], [hash mutableBytes]);
 
-	if ([bundleIdentifier isEqualToString:[receipt objectForKey:kReceiptBundleIdentifier]] &&
-		 [bundleVersion isEqualToString:[receipt objectForKey:kReceiptVersion]] &&
+    NSString *receiptBundle = [receipt objectForKey:kReceiptBundleIdentifier];
+    NSString *receiptVersion = [receipt objectForKey:kReceiptVersion];
+    if ([bundleIdentifier isEqualToString:receiptBundle] &&
+		 [bundleVersion isEqualToString:receiptVersion] &&
 		 [hash isEqualToData:[receipt objectForKey:kReceiptHash]])
 	{
 		return YES;
 	}
+
+#ifdef DEBUG
+    NSLog(@"bundle id: %@ receipt id: %@", bundleIdentifier, receiptBundle );
+    NSLog(@"bundle version: %@ receipt version: %@", bundleVersion, receiptVersion );
+#endif
 
 	return NO;
 }

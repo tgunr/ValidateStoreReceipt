@@ -610,16 +610,16 @@ BOOL validateReceiptAtPath(NSString * path)
 	// so use hard coded values instead (probably even somehow obfuscated)
 
 	// analyser warning when USE_SAMPLE_RECEIPT is defined (wontfix)
-	NSString *bundleVersion = (NSString*)global_bundleVersion;
-	NSString *bundleIdentifier = (NSString*)global_bundleIdentifier;
+	NSString *gVersion = (NSString*)global_bundleVersion;
+	NSString *gIdentifier = (NSString*)global_bundleIdentifier;
 #ifndef USE_SAMPLE_RECEIPT
 	// avoid making stupid mistakes --> check again
-    NSString *version = [[NSBundle mainBundle] objectForInfoDictionaryKey:@"CFBundleShortVersionString"];
-    NSString *bundle = [[NSBundle mainBundle] bundleIdentifier];
-	NSCAssert([bundleVersion isEqualToString:version],
-			 @"hard-coded CFBundleShortVersionString: %@ != bundle version %@", bundleVersion, version);
-	NSCAssert([bundleIdentifier isEqualToString:bundle],
-			 @"hard-coded bundle identifier %@ != bundle id %@",bundleIdentifier, bundle);
+    NSString *bVersion = [[NSBundle mainBundle] objectForInfoDictionaryKey:@"CFBundleShortVersionString"];
+    NSString *bBundle = [[NSBundle mainBundle] bundleIdentifier];
+	NSCAssert([gVersion isEqualToString: bVersion],
+			 @"hard-coded CFBundleShortVersionString: %@ != bundle version %@", gVersion, bVersion);
+	NSCAssert([gIdentifier isEqualToString: bBundle],
+			 @"hard-coded bundle identifier %@ != bundle id %@", gIdentifier, bBundle);
 #else
 	bundleVersion = @"1.0.2";
 	bundleIdentifier = @"com.example.SampleApp";
@@ -656,16 +656,16 @@ BOOL validateReceiptAtPath(NSString * path)
 
     NSString *receiptBundle = [receipt objectForKey:kReceiptBundleIdentifier];
     NSString *receiptVersion = [receipt objectForKey:kReceiptVersion];
-    if ([bundleIdentifier isEqualToString:receiptBundle] &&
-		 [bundleVersion isEqualToString:receiptVersion] &&
+    if ([gIdentifier isEqualToString:receiptBundle] &&
+		 [gVersion isEqualToString:receiptVersion] &&
 		 [hash isEqualToData:[receipt objectForKey:kReceiptHash]])
 	{
 		return YES;
 	}
 
 #ifdef DEBUG
-    NSLog(@"bundle id: %@ receipt id: %@", bundleIdentifier, receiptBundle );
-    NSLog(@"bundle version: %@ receipt version: %@", bundleVersion, receiptVersion );
+    NSLog(@"bundle id: %@ receipt id: %@", gIdentifier, receiptBundle );
+    NSLog(@"bundle version: %@ receipt version: %@", gVersion, receiptVersion );
 #endif
 
 	return NO;
